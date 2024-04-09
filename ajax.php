@@ -54,7 +54,12 @@ $object = filter_input( INPUT_POST, 'object', FILTER_SANITIZE_FULL_SPECIAL_CHARS
 switch( $object ) {
     // Taxonomy required
     case 'taxonomy':
+        // Translations are required.
+        wp_load_translations_early();
+        
         require_once( ABSPATH . WPINC . '/taxonomy.php' );
+        require_once( ABSPATH . WPINC . '/class-wp-term.php' );
+
 
         $get_meta = 'get_term_meta';
         $set_meta = 'update_term_meta';
@@ -99,7 +104,7 @@ switch( $action ) :
 
             if ( $found !== false ) {
                 // Merge device arrays while eliminating duplicates
-                $existing[$found]['device'] = array_unique( array_merge( $existing[$found]['device'], $item['device'] ) );
+                $existing[$found]['device'] = array_unique( array_merge( (array) $existing[$found]['device'], (array) $item['device'] ) );
                 
                 // Merge and unique paged values for the specific device, if paged is not 0
                 if ( $paged !== 0 ) {

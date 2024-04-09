@@ -9,7 +9,7 @@
  * @subpackage 	Support\Modules\ScrollTop
  * @copyright   Copyright (c) 2024, WeCodeArt Framework
  * @since 		6.3.7
- * @version		6.3.7
+ * @version		6.3.8
  */
 
 namespace WeCodeArt\Support\Modules;
@@ -290,10 +290,6 @@ final class Optimization implements Integration {
 			if( is_tax() || is_category() || is_tag() ) {
 				$object = 'taxonomy';
 			}
-
-			if( is_author() ) {
-				$object = 'author';
-			}
 			
 			wecodeart( 'assets' )->add_script( 'wecodeart-preload-viewport', [
 				'inline'	=> $inline_js,
@@ -325,15 +321,15 @@ final class Optimization implements Integration {
 				switch( $id_or_string ) {
 					case is_numeric( $id_or_string ):
 						$attrs = wp_parse_args( [
-							'href' 			=> wp_get_attachment_image_src( $id_or_string, wp_is_mobile() ? 'medium' : 'full' )[0],
+							'href' 			=> wp_get_attachment_image_src( $id_or_string, 'full' )[0],
 							'imagesrcset' 	=> wp_get_attachment_image_srcset( $id_or_string ),
-							'as'			=> 'image',
+							'as'			=> get_prop( $item, [ 'type' ], 'image' ),
 						], $attrs );
 						break;
 					case is_string( $id_or_string ):
 						$attrs = wp_parse_args( [
-							'href' 	=> $item['media'],
-							'as'	=> 'image',
+							'href' 	=> $id_or_string,
+							'as'	=> get_prop( $item, [ 'type' ], 'image' ),
 						], $attrs );
 					break;
 				}
