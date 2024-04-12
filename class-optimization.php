@@ -9,7 +9,7 @@
  * @subpackage 	Support\Modules\ScrollTop
  * @copyright   Copyright (c) 2024, WeCodeArt Framework
  * @since 		6.3.7
- * @version		6.3.8
+ * @version		6.4.2
  */
 
 namespace WeCodeArt\Support\Modules;
