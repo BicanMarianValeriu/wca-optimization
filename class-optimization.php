@@ -449,7 +449,7 @@ final class Optimization implements Integration {
 			'header'	=> true,
 			'preload' 	=> [
 				'instantPage' 		=> true,
-				'preloadViewport' 	=> 'all',
+				'preloadViewport' 	=> true,
 			]
 		];
 	}
