@@ -9,7 +9,7 @@
  * @subpackage 	Support\Modules\ScrollTop
  * @copyright   Copyright (c) 2024, WeCodeArt Framework
  * @since 		6.3.7
- * @version		6.3.8
+ * @version		6.4.2
  */
 
 namespace WeCodeArt\Support\Modules;
@@ -327,10 +327,20 @@ final class Optimization implements Integration {
 						], $attrs );
 						break;
 					case is_string( $id_or_string ):
-						$attrs = wp_parse_args( [
-							'href' 	=> $id_or_string,
-							'as'	=> get_prop( $item, [ 'type' ], 'image' ),
-						], $attrs );
+						$maybe_id = attachment_url_to_postid( $id_or_string );
+
+						if( $maybe_id ) {
+							$attrs = wp_parse_args( [
+								'href' 			=> wp_get_attachment_image_src( $maybe_id, 'full' )[0],
+								'imagesrcset' 	=> wp_get_attachment_image_srcset( $maybe_id ),
+								'as'			=> get_prop( $item, [ 'type' ], 'image' ),
+							], $attrs );
+						} else {
+							$attrs = wp_parse_args( [
+								'href' 	=> $id_or_string,
+								'as'	=> get_prop( $item, [ 'type' ], 'image' ),
+							], $attrs );
+						}
 					break;
 				}
 
@@ -439,7 +449,7 @@ final class Optimization implements Integration {
 			'header'	=> true,
 			'preload' 	=> [
 				'instantPage' 		=> true,
-				'preloadViewport' 	=> 'all',
+				'preloadViewport' 	=> true,
 			]
 		];
 	}
