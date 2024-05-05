@@ -97,14 +97,14 @@ switch( $action ) :
             ];
         }, $preload );
 
-        $existing  = $get_meta( $currentId, '_wca_preload_auto', true ) ?: [];
+        $existing  = (array) $get_meta( $currentId, '_wca_preload_auto', true );
 
         foreach ( $preload as $item ) {
             $found = array_search( $item['media'], array_column( $existing, 'media' ) );
 
             if ( $found !== false ) {
                 // Merge device arrays while eliminating duplicates
-                $existing[$found]['device'] = array_unique( array_merge( (array) $existing[$found]['device'], (array) $item['device'] ) );
+                $existing[$found]['device'] = array_unique( array_merge( $existing[$found]['device'], $item['device'] ) );
                 
                 // Merge and unique paged values for the specific device, if paged is not 0
                 if ( $paged !== 0 ) {

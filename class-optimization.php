@@ -134,8 +134,8 @@ final class Optimization implements Integration {
 				\add_action( 'wp_enqueue_scripts', static function(): void {
 					if( is_user_logged_in() ) {
 						return;
-					
 					}
+
 					wp_deregister_style( 'dashicons' );
 					wp_dequeue_style( 'dashicons' );
 				} );
@@ -143,7 +143,6 @@ final class Optimization implements Integration {
 
 			if( is_bool( $header ) || get_prop( $header, 'footerScripts' ) ) {
 				\add_action( 'wp_default_scripts', static function( $wp_scripts ): void {
-					$wp_scripts->add_data( 'wp-inert-polyfill',	'group', 1 );
 					$wp_scripts->add_data( 'jquery', 			'group', 1 );
 					$wp_scripts->add_data( 'jquery-core', 		'group', 1 );
 					$wp_scripts->add_data( 'jquery-migrate', 	'group', 1 );
