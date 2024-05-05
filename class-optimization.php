@@ -359,8 +359,8 @@ final class Optimization implements Integration {
 		
 		// Cleanup
 		\add_action( 'save_post', static fn( $object_id ) => self::clear_data( 'preload', $object_id, 'post' ) );
-		\add_action( 'created_term', static fn( $object_id ) => self::clear_data( 'preload', $object_id, 'post' ) );
-		\add_action( 'edited_term', static fn( $object_id ) => self::clear_data( 'preload', $object_id, 'post' ) );
+		\add_action( 'created_term', static fn( $object_id ) => self::clear_data( 'preload', $object_id, 'taxonomy' ) );
+		\add_action( 'edited_term', static fn( $object_id ) => self::clear_data( 'preload', $object_id, 'taxonomy' ) );
 	}
 
 	/**
