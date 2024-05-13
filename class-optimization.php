@@ -244,10 +244,10 @@ final class Optimization implements Integration {
 					document.querySelectorAll('img').forEach(img => {
 						const { top, bottom } = img.getBoundingClientRect();
 						if (top < window.innerHeight && bottom >= 0) {
-							let image = img.src || img.getAttribute('data-src');
+							let image = img.src ?? img.getAttribute('data-src');
 							
 							// Skip images with data URIs
-							if (image.startsWith('data:')) {
+							if (!image || image.startsWith('data:')) {
 								return;
 							}
 
