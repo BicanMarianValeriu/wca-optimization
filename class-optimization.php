@@ -256,7 +256,9 @@ final class Optimization implements Integration {
 								image = parseFloat(wpImageClass.split('wp-image-').pop());
 							}
 	
-							mediaInViewPort.push(image);
+							if(image) {
+								mediaInViewPort.push(image);
+							}
 						}
 					});
 	
