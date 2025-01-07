@@ -9,7 +9,7 @@
  * @subpackage 	Support\Modules\ScrollTop
  * @copyright   Copyright (c) 2024, WeCodeArt Framework
  * @since 		6.3.7
- * @version		6.4.2
+ * @version		6.5.8
  */
 
 namespace WeCodeArt\Support\Modules;
@@ -256,7 +256,9 @@ final class Optimization implements Integration {
 								image = parseFloat(wpImageClass.split('wp-image-').pop());
 							}
 	
-							mediaInViewPort.push(image);
+							if(image) {
+								mediaInViewPort.push(image);
+							}
 						}
 					});
 	
@@ -319,11 +321,13 @@ final class Optimization implements Integration {
 				$attrs = [];
 				switch( $id_or_string ) {
 					case is_numeric( $id_or_string ):
-						$attrs = wp_parse_args( [
-							'href' 			=> wp_get_attachment_image_src( $id_or_string, 'full' )[0],
-							'imagesrcset' 	=> wp_get_attachment_image_srcset( $id_or_string ),
-							'as'			=> get_prop( $item, [ 'type' ], 'image' ),
-						], $attrs );
+						if( is_attachment( $id_or_string ) ) {
+							$attrs = wp_parse_args( [
+								'href' 			=> wp_get_attachment_image_src( $id_or_string, 'full' )[0],
+								'imagesrcset' 	=> wp_get_attachment_image_srcset( $id_or_string ),
+								'as'			=> get_prop( $item, [ 'type' ], 'image' ),
+							], $attrs );
+						}
 						break;
 					case is_string( $id_or_string ):
 						$maybe_id = attachment_url_to_postid( $id_or_string );
