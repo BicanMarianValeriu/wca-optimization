@@ -9,7 +9,7 @@
  * @subpackage 	Support\Modules\ScrollTop
  * @copyright   Copyright (c) 2024, WeCodeArt Framework
  * @since 		6.3.7
- * @version		6.5.8
+ * @version		6.4.2
  */
 
 namespace WeCodeArt\Support\Modules;
@@ -251,9 +251,15 @@ final class Optimization implements Integration {
 								return;
 							}
 
-							const wpImageClass = Array.from(img.classList).find(className => className.startsWith('wp-image-'));
-							if (wpImageClass) {
-								image = parseFloat(wpImageClass.split('wp-image-').pop());
+							// Get ID if exists in attr
+							image = img?.dataset?.id;
+							
+							// Attempt to get from class
+							if(!image) {
+								const wpImageClass = Array.from(img.classList).find(className => className.startsWith('wp-image-'));
+								if (wpImageClass) {
+									image = parseFloat(wpImageClass.split('wp-image-').pop());
+								}
 							}
 	
 							if(image) {
@@ -321,7 +327,7 @@ final class Optimization implements Integration {
 				$attrs = [];
 				switch( $id_or_string ) {
 					case is_numeric( $id_or_string ):
-						if( is_attachment( $id_or_string ) ) {
+						if( get_post_status( $id_or_string ) ) {
 							$attrs = wp_parse_args( [
 								'href' 			=> wp_get_attachment_image_src( $id_or_string, 'full' )[0],
 								'imagesrcset' 	=> wp_get_attachment_image_srcset( $id_or_string ),
