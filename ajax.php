@@ -30,7 +30,7 @@ if( ! in_array( $action, $allowed_actions, true ) ) {
 }
 
 // Typical Headers
-header( 'Content-Type: text/html' );
+header( 'Content-Type: application/json' );
 send_nosniff_header();
 
 // Disable Caching

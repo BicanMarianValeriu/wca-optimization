@@ -9,7 +9,7 @@
  * @subpackage 	Support\Modules\ScrollTop
  * @copyright   Copyright (c) 2024, WeCodeArt Framework
  * @since 		6.3.7
- * @version		6.4.2
+ * @version		6.6.1
  */
 
 namespace WeCodeArt\Support\Modules;
@@ -252,19 +252,17 @@ final class Optimization implements Integration {
 							}
 
 							// Get ID if exists in attr
-							image = img?.dataset?.id;
+							let imageId = img?.dataset?.id;
 							
 							// Attempt to get from class
-							if(!image) {
+							if(!imageId) {
 								const wpImageClass = Array.from(img.classList).find(className => className.startsWith('wp-image-'));
 								if (wpImageClass) {
-									image = parseFloat(wpImageClass.split('wp-image-').pop());
+									imageId = parseFloat(wpImageClass.split('wp-image-').pop());
 								}
 							}
 	
-							if(image) {
-								mediaInViewPort.push(image);
-							}
+							mediaInViewPort.push(imageId ?? image);
 						}
 					});
 	
