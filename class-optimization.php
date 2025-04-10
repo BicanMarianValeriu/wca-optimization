@@ -9,7 +9,7 @@
  * @subpackage 	Support\Modules\ScrollTop
  * @copyright   Copyright (c) 2024, WeCodeArt Framework
  * @since 		6.3.7
- * @version		6.6.1
+ * @version		6.6.3
  */
 
 namespace WeCodeArt\Support\Modules;
@@ -28,6 +28,8 @@ final class Optimization implements Integration {
     use Asset;
     use Singleton;
 	use No_Conditionals;
+
+	const VERSION = '1.0.9';
 
     /**
 	 * The config of the plugin.
