@@ -60,7 +60,6 @@ switch( $object ) {
         require_once( ABSPATH . WPINC . '/taxonomy.php' );
         require_once( ABSPATH . WPINC . '/class-wp-term.php' );
 
-
         $get_meta = 'get_term_meta';
         $set_meta = 'update_term_meta';
         $callback = 'delete_term_meta';
@@ -97,7 +96,8 @@ switch( $action ) :
             ];
         }, $preload );
 
-        $existing  = (array) $get_meta( $currentId, '_wca_preload_auto', true );
+        $existing = $get_meta( $currentId, '_wca_preload_auto', true );
+        $existing = is_array( $existing ) ? array_filter( $existing, 'is_array' ) : [];
 
         foreach ( $preload as $item ) {
             if ( ! isset( $item['media'] ) || ! isset( $item['device'] ) ) {
