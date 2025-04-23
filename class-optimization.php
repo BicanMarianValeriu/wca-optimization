@@ -243,7 +243,7 @@ final class Optimization implements Integration {
 					const getDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop';
 	
 					const mediaInViewPort = [];
-					document.querySelector('.wp-site-blocks').querySelectorAll('img').forEach(img => {
+					document.querySelector('.wp-site-blocks')?.querySelectorAll('img').forEach(img => {
 						const { top, bottom } = img.getBoundingClientRect();
 						if (top < window.innerHeight && bottom >= 0) {
 							let image = img.src ?? img.getAttribute('data-src');
