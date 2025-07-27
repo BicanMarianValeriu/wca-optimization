@@ -172,6 +172,15 @@ const Options = (props) => {
                                     onChange={footerScripts => setHeaderOption({ footerScripts })}
                                 />
                             </p>
+                            <p>
+                                <ToggleControl
+                                    label={__('Font Display Swap', 'wecodeart')}
+                                    help={__('Swap font display for better performance.', 'wecodeart')}
+                                    checked={formData?.header?.fontDisplaySwap || formData?.header === true}
+                                    disabled={formData?.header === true}
+                                    onChange={fontDisplaySwap => setHeaderOption({ fontDisplaySwap })}
+                                />
+                            </p>
                         </CardBody>
                     </Card>
                 </div>
