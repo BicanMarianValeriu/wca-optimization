@@ -150,6 +150,10 @@ final class Optimization implements Integration {
 					$wp_scripts->add_data( 'jquery-migrate', 	'group', 1 );
 				} );
 			}
+
+			if( is_bool( $header ) || get_prop( $header, 'fontDisplaySwap' ) ) {
+				\add_action( 'wp_head', [ $this, 'font_display' ], 1 );
+			}
 		}
 	}
 
@@ -187,6 +191,36 @@ final class Optimization implements Integration {
 			
 			printf( '<link rel="dns-prefetch" href="%s" />' . PHP_EOL, esc_url_raw( $link ) );
 		}
+	}
+
+	/**
+	 * Modify font display for better performance
+	 *
+	 * @param	array	$fonts	The fonts array from theme.json
+	 * @return 	array
+	 */
+	public function font_display() {
+		// Remove the default font printing
+		remove_action( 'wp_head', 'wp_print_font_faces', 50 );
+
+		// Add your custom font printing
+		add_action( 'wp_head', static function(): void {
+			// Get fonts from theme.json
+			$fonts = \WP_Font_Face_Resolver::get_fonts_from_theme_json();
+			
+			if ( empty( $fonts ) ) {
+				return;
+			}
+
+			foreach ( $fonts as &$font_faces ) {
+				foreach ( $font_faces as &$font_face ) {
+					$font_face['font-display'] = 'swap'; // Your desired value
+				}
+			}
+			
+			// Print modified fonts
+			wp_print_font_faces( $fonts );
+		}, 50 );
 	}
 
 	/**
